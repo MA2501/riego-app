@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Riego Inteligente</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #0f172a;
+      color: white;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #38bdf8;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 20px;
+    }
+
+    button {
+      background: #38bdf8;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    #contador {
+      font-size: 30px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>💧 Riego por Mecha</h1>
+
+  <div class="card">
+    <p>Duración estimada: 48 horas</p>
+
+    <button onclick="iniciar()">Iniciar</button>
+    <button onclick="reiniciar()">Reiniciar</button>
+
+    <div id="contador">48h 0m 0s</div>
+  </div>
+
+  <script>
+    let tiempo = 48 * 60 * 60;
+    let intervalo;
+
+    function iniciar() {
+      clearInterval(intervalo);
+
+      intervalo = setInterval(() => {
+        let h = Math.floor(tiempo / 3600);
+        let m = Math.floor((tiempo % 3600) / 60);
+        let s = tiempo % 60;
+
+        document.getElementById("contador").innerHTML =
+          h + "h " + m + "m " + (s < 10 ? "0" + s : s) + "s";
+
+        tiempo--;
+
+        if (tiempo < 0) {
+          clearInterval(intervalo);
+          alert("⚠️ ¡El agua ya se terminó!");
+        }
+      }, 1000);
+    }
+
+    function reiniciar() {
+      clearInterval(intervalo);
+      tiempo = 48 * 60 * 60;
+      document.getElementById("contador").innerHTML = "48h 0m 0s";
+    }
+  </script>
+
+</body>
+</html>
